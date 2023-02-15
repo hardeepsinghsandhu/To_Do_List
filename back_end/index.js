@@ -37,9 +37,7 @@ app.get('/todos/:id', async (req,res)=>{
 app.post('/todos', async(req,res)=>{
     try{
         const {description} = req.body
-        const newTodo = await pool.query("insert into todo(description) values ($1)",[description])
-
-        res.json("New task added to todo list")
+        await pool.query("insert into todo(description) values ($1)",[description])
     } catch(e){
         console.log(e.message)
     }
@@ -51,9 +49,7 @@ app.put('/todos/:id', async(req,res)=>{
     try{
         const {description} = req.body
         const id = req.params.id
-        const updateTodo = await pool.query("update todo set description = $1 where tid = $2",[description,id])
-
-        res.json("Todo is updated")
+        await pool.query("update todo set description = $1 where tid = $2",[description,id])
     } catch(e){
         console.log(e.message)
     }
@@ -64,9 +60,7 @@ app.put('/todos/:id', async(req,res)=>{
 app.delete('/todos/:id', async (req,res)=>{
     try{
         const id = req.params.id;
-        const deleteTodo = await pool.query("delete from todo where tid = $1",[id])
-
-        res.json("Todo was deleted")
+        await pool.query("delete from todo where tid = $1",[id])
     } catch(e){
         console.log(e.message)
     }
